@@ -28,7 +28,9 @@ Simple:
 
 ## Current status and TODO
 
-Right now, `4chandlr` is "testing only", and it will only work on unix-like systems with Perl 5.10 or newer.
+What little code exists here is extremely sloppy and hastily thrown together. It's a mircale that it can even be executed.
+
+Right now, `4chandlr` is strictly "testing only", and it will only work on unix-like systems with Perl 5.10 or newer.
 
 I want to add some command line options and a config file in the future.
 
