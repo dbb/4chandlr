@@ -1,0 +1,44 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use 5.010;
+use LWP::UserAgent;
+
+my $page = shift @ARGV or die "must supply URL";
+
+my $ua = LWP::UserAgent->new();
+#$ua = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.22 (KHTML, like Gecko) Ubuntu Chromium/25.0.1364.160 Chrome/25.0.1364.160 Safari/537.22";
+$ua->agent("Mozilla/8.0");
+
+
+## ex, http://boards.4chan.org/k/res/16632156
+my $dir = "$ENV{HOME}/4chandlr";
+mkdir $dir unless -d $dir;
+chdir $dir;
+
+my $time = time();
+my $save_name;
+if ( $page =~ m#\.org/(\w+)/res/(\d+)# ) {
+    $save_name = "$1_$2_$time";
+}
+else {
+    die "Bad URL";
+}
+
+
+$ua->mirror( $page, "${save_name}.html" );
+
+open( my $html,  "<",  "${save_name}.html" );
+mkdir "$dir/$save_name";
+while ( <$html> ) {
+    my @words = split /\s+/, $_;
+    for (@words) {
+        if ( m#(images\.4chan\.org/\w+/src/(\d+\.\w+))"#g ) {
+            my $filename = $2;
+            say "Saving http://$1 to $save_name/$2";
+            $ua->mirror( "http://$1" , "${save_name}/$2" );
+        }
+    }
+
+}
+
