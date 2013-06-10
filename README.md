@@ -1,6 +1,6 @@
-# 4chandler
+# 4chandlr
 
-4chandlr - a simple 4chan thread downloader
+4chandlr - a simple 4chan thread DownLoadeR
 
 ### Dedication 
 
